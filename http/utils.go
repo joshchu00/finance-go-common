@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func Get(url string) (bytes []byte, err error) {
+func Get(url string, referer string) (bytes []byte, err error) {
 
 	client := &http.Client{}
 
@@ -15,6 +15,8 @@ func Get(url string) (bytes []byte, err error) {
 	if err != nil {
 		return
 	}
+
+	request.Header.Add("Referer", referer)
 
 	var response *http.Response
 	response, err = client.Do(request)
