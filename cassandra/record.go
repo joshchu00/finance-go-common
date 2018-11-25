@@ -12,6 +12,7 @@ type record struct {
 	symbol   string
 	period   string
 	datetime time.Time
+	name     string
 	open     *inf.Dec
 	high     *inf.Dec
 	low      *inf.Dec
@@ -20,7 +21,7 @@ type record struct {
 }
 
 var (
-	insertRecordCQL = "INSERT INTO record (exchange, symbol, period, datetime, open, high, low, close, volume) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+	insertRecordCQL = "INSERT INTO record (exchange, symbol, period, datetime, name, open, high, low, close, volume) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 )
 
 func (r *record) insert(session *gocql.Session) (err error) {
@@ -31,6 +32,7 @@ func (r *record) insert(session *gocql.Session) (err error) {
 		r.symbol,
 		r.period,
 		r.datetime,
+		r.name,
 		r.open,
 		r.high,
 		r.low,
