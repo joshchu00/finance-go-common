@@ -41,7 +41,7 @@ func CassandraHosts() string {
 }
 
 func CassandraKeyspace() string {
-	return fmt.Sprintf("%s_%s", viper.GetString("cassandra.hosts"), Environment())
+	return fmt.Sprintf("%s_%s", viper.GetString("cassandra.keyspace"), Environment())
 }
 
 func KafkaBootstrapServers() string {
