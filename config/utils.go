@@ -25,15 +25,15 @@ func Environment() string {
 }
 
 func ConfigDirectory() string {
-	return fmt.Sprintf("%s/%s", viper.GetString("directory.base"), viper.GetString("directory.config"))
+	return fmt.Sprintf("%s%s", viper.GetString("directory.base"), viper.GetString("directory.config"))
 }
 
 func LogDirectory() string {
-	return fmt.Sprintf("%s/%s", viper.GetString("directory.base"), viper.GetString("directory.log"))
+	return fmt.Sprintf("%s%s", viper.GetString("directory.base"), viper.GetString("directory.log"))
 }
 
 func DataDirectory() string {
-	return fmt.Sprintf("%s/%s", viper.GetString("directory.base"), viper.GetString("directory.data"))
+	return fmt.Sprintf("%s%s", viper.GetString("directory.base"), viper.GetString("directory.data"))
 }
 
 func CassandraHosts() string {
@@ -85,5 +85,5 @@ func TWSEReferer() string {
 }
 
 func TWSEDataDirectory() string {
-	return fmt.Sprintf("%s/%s", DataDirectory(), viper.GetString("directory.data"))
+	return fmt.Sprintf("%s%s", DataDirectory(), viper.GetString("directory.data"))
 }
