@@ -1,0 +1,42 @@
+# environment: "dev", "test", "stg", "prod"
+environment: "prod"
+
+directory:
+  base: "/var/lib/finance"
+  config: "/config"
+  log: "/log"
+  data: "/data"
+  
+cassandra:
+  hosts: "192.168.33.10:39042"
+  keyspace: "finance"
+
+kafka:
+  bootstrap.servers: "192.168.33.10:39092"
+  topics: 
+    processor: "processor"
+    analyzer: "analyzer"
+    chooser: "chooser"
+
+crawler:
+  # mode: "batch", "daemon"
+  mode: "daemon"
+
+  batch: 
+    start:
+      year: 2018
+      month: 11
+      day: 12
+    end:
+      year: 2018
+      month: 11
+      day: 16
+
+  daemon:
+    cron: "0 5 15-19 * * *"
+
+twse:
+  url: "http://www.twse.com.tw/exchangeReport/MI_INDEX?response=json&date=%s&type=ALLBUT0999&_=%d"
+  referer: "http://www.twse.com.tw/zh/page/trading/exchange/MI_INDEX.html"
+  data: "/twse"
+
