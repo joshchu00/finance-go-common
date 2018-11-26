@@ -85,5 +85,5 @@ func TWSEReferer() string {
 }
 
 func TWSEDataDirectory() string {
-	return fmt.Sprintf("%s%s", DataDirectory(), viper.GetString("directory.data"))
+	return fmt.Sprintf("%s%s", DataDirectory(), viper.GetString("twse.data"))
 }
