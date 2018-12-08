@@ -33,7 +33,8 @@ crawler:
       day: 16
 
   daemon:
-    cron: "0 5 15-19 * * *"
+    # cron: use UTC
+    cron: "0 5 7-12 * * *"
 
 twse:
   url: "http://www.twse.com.tw/exchangeReport/MI_INDEX?response=json&date=%s&type=ALLBUT0999&_=%d"
