@@ -64,16 +64,16 @@ func CrawlerMode() string {
 	return viper.GetString("crawler.mode")
 }
 
+func CrawlerBatchMode() string {
+	return viper.GetString("crawler.batch.mode")
+}
+
 func CrawlerBatchStartTime() (int, int, int) {
 	return viper.GetInt("crawler.batch.start.year"), viper.GetInt("crawler.batch.start.month"), viper.GetInt("crawler.batch.start.day")
 }
 
 func CrawlerBatchEndTime() (int, int, int) {
 	return viper.GetInt("crawler.batch.end.year"), viper.GetInt("crawler.batch.end.month"), viper.GetInt("crawler.batch.end.day")
-}
-
-func CrawlerDaemonCron() string {
-	return viper.GetString("crawler.daemon.cron")
 }
 
 func TWSEURL() string {
@@ -86,4 +86,8 @@ func TWSEReferer() string {
 
 func TWSEDataDirectory() string {
 	return fmt.Sprintf("%s%s", DataDirectory(), viper.GetString("twse.data"))
+}
+
+func TWSECron() string {
+	return viper.GetString("twse.cron")
 }

@@ -22,7 +22,9 @@ crawler:
   # mode: "batch", "daemon"
   mode: "daemon"
 
-  batch: 
+  batch:
+    # mode: "real", "virtual"
+    mode: "real"
     start:
       year: 2018
       month: 11
@@ -32,12 +34,9 @@ crawler:
       month: 11
       day: 16
 
-  daemon:
-    # cron: use UTC
-    cron: "0 5 7-12 * * *"
-
 twse:
   url: "http://www.twse.com.tw/exchangeReport/MI_INDEX?response=json&date=%s&type=ALLBUT0999&_=%d"
   referer: "http://www.twse.com.tw/zh/page/trading/exchange/MI_INDEX.html"
   data: "/twse"
-
+  # cron: use UTC
+  cron: "0 5 7-12 * * *"
