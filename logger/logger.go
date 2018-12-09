@@ -8,6 +8,8 @@ import (
 	"strings"
 )
 
+const pattern = "[%-5s] %-30s [%20s:%4d] - %s"
+
 func Init(logDirectory string, service string) {
 
 	logfile, err := os.OpenFile(fmt.Sprintf("%s/%s.log", logDirectory, service), os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0666)
@@ -26,7 +28,7 @@ func write(level string, message string) {
 	funcName = funcName[strings.LastIndex(funcName, "/")+1:]
 	fileName := file[strings.LastIndex(file, "/")+1:]
 
-	log.Printf("[%-5s] %-30s [%20s:%4d] - %s", level, funcName, fileName, line, message)
+	log.Printf(pattern, level, funcName, fileName, line, message)
 }
 
 func Fatal(message string) {
