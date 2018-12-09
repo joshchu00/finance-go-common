@@ -8,16 +8,16 @@ func GetTimestamp(t time.Time) int64 {
 	return t.UnixNano() / 1e6
 }
 
-func getTime(ts int64, loc *time.Location) time.Time {
+func GetTime(ts int64, loc *time.Location) time.Time {
 	return time.Unix(ts/1e3, ts%1e3*1e6).In(loc)
 }
 
 func GetTimeString(ts int64, loc *time.Location) string {
-	return getTime(ts, loc).String()
+	return GetTime(ts, loc).String()
 }
 
 func GetDateString(ts int64, loc *time.Location) string {
-	return getTime(ts, loc).Format("20060102")
+	return GetTime(ts, loc).Format("20060102")
 }
 
 func AddOneDay(ts int64) int64 {
