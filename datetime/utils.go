@@ -12,7 +12,7 @@ func getTime(ts int64) time.Time {
 	return time.Unix(ts/1e3, ts%1e3*1e6)
 }
 
-func GetTimestampString(ts int64) string {
+func GetTimeString(ts int64) string {
 	return getTime(ts).String()
 }
 
