@@ -19,3 +19,7 @@ func GetTimeString(ts int64, loc *time.Location) string {
 func GetDateString(ts int64, loc *time.Location) string {
 	return getTime(ts, loc).Format("20060102")
 }
+
+func AddOneDay(ts int64) int64 {
+	return ts + int64(24*time.Hour/1e6)
+}
