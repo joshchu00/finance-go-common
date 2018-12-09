@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-const pattern = "[%-5s] %-30s [%20s:%4d] - %s"
+const pattern = "[%-5s] %-30s [%20s:%4d] - %s\n"
 
 func Init(logDirectory string, service string) {
 
@@ -21,36 +21,55 @@ func Init(logDirectory string, service string) {
 	log.SetFlags(log.LstdFlags | log.LUTC)
 }
 
-func write(level string, message string) {
-
-	pc, file, line, _ := runtime.Caller(2)
-	funcName := runtime.FuncForPC(pc).Name()
+func getInfo() (funcName string, fileName string, line int) {
+	var pc uintptr
+	var file string
+	pc, file, line, _ = runtime.Caller(3)
+	funcName = runtime.FuncForPC(pc).Name()
 	funcName = funcName[strings.LastIndex(funcName, "/")+1:]
-	fileName := file[strings.LastIndex(file, "/")+1:]
+	fileName = file[strings.LastIndex(file, "/")+1:]
+	return
+}
 
+func fatalf(message string) {
+	funcName, fileName, line := getInfo()
+	log.Fatalf(pattern, "FATAL", funcName, fileName, line, message)
+}
+
+func panicf(message string) {
+	funcName, fileName, line := getInfo()
+	log.Panicf(pattern, "PANIC", funcName, fileName, line, message)
+}
+
+func printf(level string, message string) {
+	funcName, fileName, line := getInfo()
 	log.Printf(pattern, level, funcName, fileName, line, message)
 }
 
 func Fatal(message string) {
-	write("FATAL", message)
+	fatalf(message)
+}
+
+func Panic(message string) {
+	panicf(message)
 }
 
 func Error(message string) {
-	write("ERROR", message)
+	printf("ERROR", message)
 }
 
 func Warn(message string) {
-	write("WARN", message)
+	printf("WARN", message)
 }
 
 func Info(message string) {
-	write("INFO", message)
+	printf("INFO", message)
 }
 
 func Debug(message string) {
-	write("DEBUG", message)
+	printf("DEBUG", message)
 }
 
 func Trace(message string) {
-	write("TRACE", message)
+	printf("TRACE", message)
 }
