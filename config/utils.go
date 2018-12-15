@@ -69,11 +69,13 @@ func CrawlerBatchMode() string {
 }
 
 func CrawlerBatchStartTime() (int, int, int) {
-	return viper.GetInt("crawler.batch.start.year"), viper.GetInt("crawler.batch.start.month"), viper.GetInt("crawler.batch.start.day")
+	start := viper.GetTime("crawler.batch.start")
+	return start.Year(), int(start.Month()), start.Day()
 }
 
 func CrawlerBatchEndTime() (int, int, int) {
-	return viper.GetInt("crawler.batch.end.year"), viper.GetInt("crawler.batch.end.month"), viper.GetInt("crawler.batch.end.day")
+	end := viper.GetTime("crawler.batch.end")
+	return end.Year(), int(end.Month()), end.Day()
 }
 
 func TWSEURL() string {
