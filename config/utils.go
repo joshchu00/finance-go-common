@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"strings"
+	"time"
 
 	"github.com/spf13/viper"
 )
@@ -68,14 +69,12 @@ func CrawlerBatchKind() string {
 	return viper.GetString("crawler.batch.kind")
 }
 
-func CrawlerBatchStartTime() (int, int, int) {
-	start := viper.GetTime("crawler.batch.start")
-	return start.Year(), int(start.Month()), start.Day()
+func CrawlerBatchStartTime() time.Time {
+	return viper.GetTime("crawler.batch.start")
 }
 
-func CrawlerBatchEndTime() (int, int, int) {
-	end := viper.GetTime("crawler.batch.end")
-	return end.Year(), int(end.Month()), end.Day()
+func CrawlerBatchEndTime() time.Time {
+	return viper.GetTime("crawler.batch.end")
 }
 
 func TWSEURL() string {
