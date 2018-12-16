@@ -21,6 +21,17 @@ func Init() {
 	}
 }
 
+const (
+	EnvironmentDev          = "dev"
+	EnvironmentTest         = "test"
+	EnvironmentStg          = "stg"
+	EnvironmentProd         = "prod"
+	CrawlerModeBatch        = "batch"
+	CrawlerModeDaemon       = "daemon"
+	CrawlerBatchKindReal    = "real"
+	CrawlerBatchKindVirtual = "virutal"
+)
+
 func Environment() string {
 	return viper.GetString("environment")
 }
