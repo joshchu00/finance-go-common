@@ -23,8 +23,8 @@ crawler:
   mode: "daemon"
 
   batch:
-    # type: "real", "virtual"
-    type: "real"
+    # kind: "real", "virtual"
+    kind: "real"
     start: "2018-11-12"
     end: "2018-11-16"
 
