@@ -64,8 +64,8 @@ func CrawlerMode() string {
 	return viper.GetString("crawler.mode")
 }
 
-func CrawlerBatchMode() string {
-	return viper.GetString("crawler.batch.mode")
+func CrawlerBatchType() string {
+	return viper.GetString("crawler.batch.type")
 }
 
 func CrawlerBatchStartTime() (int, int, int) {
