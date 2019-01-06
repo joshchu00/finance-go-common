@@ -103,3 +103,7 @@ func TWSEDataDirectory() string {
 func TWSECron() string {
 	return viper.GetString("twse.cron")
 }
+
+func PorterV1Address() string {
+	return viper.GetString("porter.v1.address")
+}

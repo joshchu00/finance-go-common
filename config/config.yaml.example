@@ -34,3 +34,7 @@ twse:
   data: "/twse"
   # cron: use UTC
   cron: "0 5 7-12 * * *"
+
+porter:
+  v1:
+    address: "192.168.33.10:50051"
