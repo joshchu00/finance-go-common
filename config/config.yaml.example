@@ -36,8 +36,10 @@ twse:
   cron: "0 5 7-12 * * *"
 
 shielder:
-  address: ":50080"
+  host: "192.168.33.10"
+  port: "50080"
 
 porter:
   v1:
-    address: ":50011"
+    host: "192.168.33.10"
+    port: "50011"
