@@ -35,6 +35,9 @@ twse:
   # cron: use UTC
   cron: "0 5 7-12 * * *"
 
+shielder:
+  address: ":50080"
+
 porter:
   v1:
-    address: ":50051"
+    address: ":50011"

@@ -104,6 +104,10 @@ func TWSECron() string {
 	return viper.GetString("twse.cron")
 }
 
+func ShielderAddress() string {
+	return viper.GetString("shielder.address")
+}
+
 func PorterV1Address() string {
 	return viper.GetString("porter.v1.address")
 }
