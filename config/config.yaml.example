@@ -37,4 +37,4 @@ twse:
 
 porter:
   v1:
-    address: "192.168.33.10:50051"
+    address: ":50051"
