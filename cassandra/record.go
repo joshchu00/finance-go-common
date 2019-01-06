@@ -7,16 +7,16 @@ import (
 )
 
 type Record struct {
-	exchange string
-	symbol   string
-	period   string
-	datetime time.Time
-	name     string
-	open     *inf.Dec
-	high     *inf.Dec
-	low      *inf.Dec
-	close    *inf.Dec
-	volume   int64
+	Exchange string
+	Symbol   string
+	Period   string
+	Datetime time.Time
+	Name     string
+	Open     *inf.Dec
+	High     *inf.Dec
+	Low      *inf.Dec
+	Close    *inf.Dec
+	Volume   int64
 }
 
 func (c *Client) InsertRecord(r *Record) (err error) {
@@ -25,16 +25,16 @@ func (c *Client) InsertRecord(r *Record) (err error) {
 
 	err = c.session.Query(
 		cql,
-		r.exchange,
-		r.symbol,
-		r.period,
-		r.datetime,
-		r.name,
-		r.open,
-		r.high,
-		r.low,
-		r.close,
-		r.volume,
+		r.Exchange,
+		r.Symbol,
+		r.Period,
+		r.Datetime,
+		r.Name,
+		r.Open,
+		r.High,
+		r.Low,
+		r.Close,
+		r.Volume,
 	).Exec()
 
 	return
@@ -62,16 +62,16 @@ func (c *Client) SelectAllRecord(exchange string, symbol string, period string) 
 		rs = append(
 			rs,
 			&Record{
-				exchange: exchange,
-				symbol:   symbol,
-				period:   period,
-				datetime: datetime,
-				name:     name,
-				open:     open,
-				high:     high,
-				low:      low,
-				close:    close,
-				volume:   volume,
+				Exchange: exchange,
+				Symbol:   symbol,
+				Period:   period,
+				Datetime: datetime,
+				Name:     name,
+				Open:     open,
+				High:     high,
+				Low:      low,
+				Close:    close,
+				Volume:   volume,
 			},
 		)
 	}
