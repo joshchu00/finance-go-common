@@ -38,6 +38,11 @@ twse:
 shielder:
   host: "192.168.33.10"
   port: "58080"
+  cors:
+    methods:
+      - "GET"
+    origins:
+      - "http://192.168.33.10:50080"
 
 porter:
   v1:

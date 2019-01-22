@@ -112,6 +112,14 @@ func ShielderPort() string {
 	return viper.GetString("shielder.port")
 }
 
+func ShielderCORSMethods() []string {
+	return viper.GetStringSlice("shielder.cors.methods")
+}
+
+func ShielderCORSOrigins() []string {
+	return viper.GetStringSlice("shielder.cors.origins")
+}
+
 func PorterV1Host() string {
 	return viper.GetString("porter.v1.host")
 }
