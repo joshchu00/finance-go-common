@@ -35,10 +35,6 @@ func Environment() string {
 	return viper.GetString("environment")
 }
 
-func ConfigDirectory() string {
-	return fmt.Sprintf("%s%s", viper.GetString("directory.base"), viper.GetString("directory.config"))
-}
-
 func LogDirectory() string {
 	return fmt.Sprintf("%s%s", viper.GetString("directory.base"), viper.GetString("directory.log"))
 }

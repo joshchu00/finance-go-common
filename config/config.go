@@ -6,7 +6,6 @@ environment: "prod"
 
 directory:
   base: "/var/lib/finance"
-  config: "/config"
   log: "/log"
   data: "/data"
   
