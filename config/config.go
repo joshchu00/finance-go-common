@@ -1,3 +1,6 @@
+package config
+
+var configYAML = []byte(`
 # environment: "dev", "test", "stg", "prod"
 environment: "prod"
 
@@ -48,3 +51,4 @@ porter:
   v1:
     host: "192.168.33.10"
     port: "51011"
+`)

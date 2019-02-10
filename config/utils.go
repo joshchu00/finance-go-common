@@ -1,6 +1,7 @@
 package config
 
 import (
+	"bytes"
 	"fmt"
 	"log"
 	"strings"
@@ -11,12 +12,10 @@ import (
 
 func Init() {
 
-	replacer := strings.NewReplacer(".", "_")
-	viper.SetEnvKeyReplacer(replacer)
+	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 	viper.AutomaticEnv()
-	viper.SetConfigName("config") // name of config file (without extension)
-	viper.AddConfigPath("/var/lib/finance/config")
-	if err := viper.ReadInConfig(); err != nil { // Find and read the config file and handle errors reading the config file
+	viper.SetConfigType("yaml")
+	if err := viper.ReadConfig(bytes.NewBuffer(configYAML)); err != nil {
 		log.Fatalln("FATAL", "Open config file error:", err)
 	}
 }
@@ -29,7 +28,7 @@ const (
 	CrawlerModeBatch        = "batch"
 	CrawlerModeDaemon       = "daemon"
 	CrawlerBatchKindReal    = "real"
-	CrawlerBatchKindVirtual = "virutal"
+	CrawlerBatchKindVirtual = "virtual"
 )
 
 func Environment() string {
