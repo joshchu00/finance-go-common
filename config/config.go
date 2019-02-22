@@ -1,24 +1,29 @@
 package config
 
 var configYAML = []byte(`
-# environment: "dev", "test", "stg", "prod"
-environment: "prod"
+# environment.name: "dev", "test", "stg", "prod"
+environment.name: "dev"
 
 directory:
-  base: "/var/lib/finance"
+  base:
+    prefix: "/var/lib/finance"
   log: "/log"
   data: "/data"
   
 cassandra:
   hosts: "192.168.33.10:39042"
-  keyspace: "finance"
+  keyspace:
+    prefix: "finance"
 
 kafka:
   bootstrap.servers: "192.168.33.10:39092"
   topics: 
-    processor: "processor"
-    analyzer: "analyzer"
-    chooser: "chooser"
+    processor:
+      prefix: "processor"
+    analyzer:
+      prefix: "analyzer"
+    chooser:
+      prefix: "chooser"
 
 crawler:
   # mode: "batch", "daemon"
@@ -37,6 +42,11 @@ twse:
   # cron: use UTC
   cron: "0 5 7-12 * * *"
 
+porter:
+  v1:
+    host: "192.168.33.10"
+    port: "51011"
+
 shielder:
   host: "192.168.33.10"
   port: "58080"
@@ -45,9 +55,4 @@ shielder:
       - "GET"
     origins:
       - "http://192.168.33.10:50080"
-
-porter:
-  v1:
-    host: "192.168.33.10"
-    port: "51011"
 `)

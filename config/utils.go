@@ -21,26 +21,26 @@ func Init() {
 }
 
 const (
-	EnvironmentDev          = "dev"
-	EnvironmentTest         = "test"
-	EnvironmentStg          = "stg"
-	EnvironmentProd         = "prod"
+	EnvironmentNameDev      = "dev"
+	EnvironmentNameTest     = "test"
+	EnvironmentNameStg      = "stg"
+	EnvironmentNameProd     = "prod"
 	CrawlerModeBatch        = "batch"
 	CrawlerModeDaemon       = "daemon"
 	CrawlerBatchKindReal    = "real"
 	CrawlerBatchKindVirtual = "virtual"
 )
 
-func Environment() string {
-	return viper.GetString("environment")
+func EnvironmentName() string {
+	return viper.GetString("environment.name")
 }
 
 func LogDirectory() string {
-	return fmt.Sprintf("%s%s", viper.GetString("directory.base"), viper.GetString("directory.log"))
+	return fmt.Sprintf("%s_%s%s", viper.GetString("directory.base.prefix"), EnvironmentName(), viper.GetString("directory.log"))
 }
 
 func DataDirectory() string {
-	return fmt.Sprintf("%s%s", viper.GetString("directory.base"), viper.GetString("directory.data"))
+	return fmt.Sprintf("%s_%s%s", viper.GetString("directory.base.prefix"), EnvironmentName(), viper.GetString("directory.data"))
 }
 
 func CassandraHosts() string {
@@ -48,7 +48,7 @@ func CassandraHosts() string {
 }
 
 func CassandraKeyspace() string {
-	return fmt.Sprintf("%s_%s", viper.GetString("cassandra.keyspace"), Environment())
+	return fmt.Sprintf("%s_%s", viper.GetString("cassandra.keyspace.prefix"), EnvironmentName())
 }
 
 func KafkaBootstrapServers() string {
@@ -56,15 +56,15 @@ func KafkaBootstrapServers() string {
 }
 
 func KafkaProcessorTopic() string {
-	return fmt.Sprintf("%s_%s", viper.GetString("kafka.topics.processor"), Environment())
+	return fmt.Sprintf("%s_%s", viper.GetString("kafka.topics.processor.prefix"), EnvironmentName())
 }
 
 func KafkaAnalyzerTopic() string {
-	return fmt.Sprintf("%s_%s", viper.GetString("kafka.topics.analyzer"), Environment())
+	return fmt.Sprintf("%s_%s", viper.GetString("kafka.topics.analyzer.prefix"), EnvironmentName())
 }
 
 func KafkaChooserTopic() string {
-	return fmt.Sprintf("%s_%s", viper.GetString("kafka.topics.chooser"), Environment())
+	return fmt.Sprintf("%s_%s", viper.GetString("kafka.topics.chooser.prefix"), EnvironmentName())
 }
 
 func CrawlerMode() string {
@@ -99,6 +99,14 @@ func TWSECron() string {
 	return viper.GetString("twse.cron")
 }
 
+func PorterV1Host() string {
+	return viper.GetString("porter.v1.host")
+}
+
+func PorterV1Port() string {
+	return viper.GetString("porter.v1.port")
+}
+
 func ShielderHost() string {
 	return viper.GetString("shielder.host")
 }
@@ -113,12 +121,4 @@ func ShielderCORSMethods() []string {
 
 func ShielderCORSOrigins() []string {
 	return viper.GetStringSlice("shielder.cors.origins")
-}
-
-func PorterV1Host() string {
-	return viper.GetString("porter.v1.host")
-}
-
-func PorterV1Port() string {
-	return viper.GetString("porter.v1.port")
 }
