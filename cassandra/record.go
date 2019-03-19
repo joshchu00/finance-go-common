@@ -6,20 +6,28 @@ import (
 	inf "gopkg.in/inf.v0"
 )
 
-type Record struct {
+type RecordPartitionKey struct {
 	Exchange string
 	Symbol   string
 	Period   string
-	Datetime time.Time
-	Name     string
-	Open     *inf.Dec
-	High     *inf.Dec
-	Low      *inf.Dec
-	Close    *inf.Dec
-	Volume   int64
 }
 
-func (c *Client) InsertRecord(r *Record) (err error) {
+type RecordPrimaryKey struct {
+	RecordPartitionKey
+	Datetime time.Time
+}
+
+type RecordRow struct {
+	RecordPrimaryKey
+	Name   string
+	Open   *inf.Dec
+	High   *inf.Dec
+	Low    *inf.Dec
+	Close  *inf.Dec
+	Volume int64
+}
+
+func (c *Client) InsertRecordRow(r *RecordRow) (err error) {
 
 	cql := "INSERT INTO record (exchange, symbol, period, datetime, name, open, high, low, close, volume) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 
@@ -40,38 +48,43 @@ func (c *Client) InsertRecord(r *Record) (err error) {
 	return
 }
 
-func (c *Client) SelectAllRecord(exchange string, symbol string, period string) (rs []*Record, err error) {
+func (c *Client) SelectRecordRowsByPartitionKey(rptk *RecordPartitionKey) (rrs []*RecordRow, err error) {
 
 	cql := "SELECT exchange, symbol, period, datetime, name, open, high, low, close, volume FROM record WHERE exchange = ? AND symbol = ? AND period = ? ORDER BY datetime ASC"
 
 	iter := c.session.Query(
 		cql,
-		exchange,
-		symbol,
-		period,
+		rptk.Exchange,
+		rptk.Symbol,
+		rptk.Period,
 	).Iter()
 
+	var exchange, symbol, period string
 	var datetime time.Time
 	var name string
 	var open, high, low, close *inf.Dec
 	var volume int64
 
-	rs = make([]*Record, 0)
+	rrs = make([]*RecordRow, 0)
 
 	for iter.Scan(&exchange, &symbol, &period, &datetime, &name, &open, &high, &low, &close, &volume) {
-		rs = append(
-			rs,
-			&Record{
-				Exchange: exchange,
-				Symbol:   symbol,
-				Period:   period,
-				Datetime: datetime,
-				Name:     name,
-				Open:     open,
-				High:     high,
-				Low:      low,
-				Close:    close,
-				Volume:   volume,
+		rrs = append(
+			rrs,
+			&RecordRow{
+				RecordPrimaryKey: RecordPrimaryKey{
+					RecordPartitionKey: RecordPartitionKey{
+						Exchange: exchange,
+						Symbol:   symbol,
+						Period:   period,
+					},
+					Datetime: datetime,
+				},
+				Name:   name,
+				Open:   open,
+				High:   high,
+				Low:    low,
+				Close:  close,
+				Volume: volume,
 			},
 		)
 	}
