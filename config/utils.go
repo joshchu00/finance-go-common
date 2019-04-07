@@ -67,6 +67,10 @@ func KafkaChooserTopic() string {
 	return fmt.Sprintf("%s_%s", viper.GetString("kafka.topics.chooser.prefix"), EnvironmentName())
 }
 
+func KafkaNotifierTopic() string {
+	return fmt.Sprintf("%s_%s", viper.GetString("kafka.topics.notifier.prefix"), EnvironmentName())
+}
+
 func CrawlerMode() string {
 	return viper.GetString("crawler.mode")
 }

@@ -13,5 +13,5 @@ const (
 type Indicator struct {
 	Type   IndicatorType
 	Column cassandra.IndicatorColumn
-	Value  int64
+	Period int64
 }

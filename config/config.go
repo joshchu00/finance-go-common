@@ -24,6 +24,8 @@ kafka:
       prefix: "analyzer"
     chooser:
       prefix: "chooser"
+    notifier:
+      prefix: "notifier"
 
 crawler:
   # mode: "batch", "daemon"

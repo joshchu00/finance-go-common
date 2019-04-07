@@ -28,6 +28,7 @@ type IndicatorRow struct {
 type IndicatorColumn string
 
 const (
+	IndicatorColumnUnknown IndicatorColumn = "unknown"
 	IndicatorColumnSMA0060 IndicatorColumn = "sma0060"
 	IndicatorColumnSMA0120 IndicatorColumn = "sma0120"
 	IndicatorColumnSMA0240 IndicatorColumn = "sma0240"

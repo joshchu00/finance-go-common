@@ -7,9 +7,9 @@ require (
 	github.com/confluentinc/confluent-kafka-go v0.11.6
 	github.com/gocql/gocql v0.0.0-20181124151448-70385f88b28b
 	github.com/kr/pretty v0.1.0 // indirect
+	github.com/markcheno/go-talib v0.0.0-20190307022042-cd53a9264d70
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/spf13/viper v1.2.1
 	github.com/stretchr/testify v1.2.2 // indirect
-	golang.org/x/arch v0.0.0-20190312162104-788fe5ffcd8c // indirect
 	gopkg.in/inf.v0 v0.9.1
 )
