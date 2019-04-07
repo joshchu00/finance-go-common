@@ -1,47 +1,95 @@
 package cassandra
 
+import (
+	"fmt"
+	"time"
+)
+
+type StrategyPartitionKey struct {
+	Exchange string
+	Symbol   string
+	Period   string
+}
+
 type StrategyPrimaryKey struct {
-	Name string
+	StrategyPartitionKey
+	Datetime time.Time
 }
 
 type StrategyRow struct {
 	StrategyPrimaryKey
-	Description string
+	LSMA string
 }
+
+type StrategyColumn string
+
+const (
+	StrategyColumnUnknown StrategyColumn = "unknown"
+	StrategyColumnLSMA    StrategyColumn = "lsma"
+)
 
 func (c *Client) InsertStrategyRow(s *StrategyRow) (err error) {
 
-	cql := "INSERT INTO strategy (name, description) VALUES (?, ?)"
+	cql := "INSERT INTO strategy (exchange, symbol, period, datetime, lsma) VALUES (?, ?, ?, ?, ?)"
 
 	err = c.session.Query(
 		cql,
-		s.Name,
-		s.Description,
+		s.Exchange,
+		s.Symbol,
+		s.Period,
+		s.Datetime,
+		s.LSMA,
 	).Exec()
 
 	return
 }
 
-func (c *Client) SelectStrategyRows() (srs []*StrategyRow, err error) {
+func (c *Client) InsertStrategyRowStringColumn(spmk *StrategyPrimaryKey, column StrategyColumn, value string) (err error) {
 
-	cql := "SELECT name, description FROM strategy"
+	cql := fmt.Sprintf("INSERT INTO strategy (exchange, symbol, period, datetime, %s) VALUES (?, ?, ?, ?, ?)", column)
+
+	err = c.session.Query(
+		cql,
+		spmk.Exchange,
+		spmk.Symbol,
+		spmk.Period,
+		spmk.Datetime,
+		value,
+	).Exec()
+
+	return
+}
+
+func (c *Client) SelectStrategyRowsByPartitionKey(sptk *StrategyPartitionKey) (srs []*StrategyRow, err error) {
+
+	cql := "SELECT exchange, symbol, period, datetime, lsma FROM strategy WHERE exchange = ? AND symbol = ? AND period = ? ORDER BY datetime ASC"
 
 	iter := c.session.Query(
 		cql,
+		sptk.Exchange,
+		sptk.Symbol,
+		sptk.Period,
 	).Iter()
 
-	var name, description string
+	var exchange, symbol, period string
+	var datetime time.Time
+	var lsma string
 
 	srs = make([]*StrategyRow, 0)
 
-	for iter.Scan(&name, &description) {
+	for iter.Scan(&exchange, &symbol, &period, &datetime, &lsma) {
 		srs = append(
 			srs,
 			&StrategyRow{
 				StrategyPrimaryKey: StrategyPrimaryKey{
-					Name: name,
+					StrategyPartitionKey: StrategyPartitionKey{
+						Exchange: exchange,
+						Symbol:   symbol,
+						Period:   period,
+					},
+					Datetime: datetime,
 				},
-				Description: description,
+				LSMA: lsma,
 			},
 		)
 	}
