@@ -44,6 +44,10 @@ func GetSMA(period int64) (idct *Indicator) {
 }
 
 func CalculateSMA(in []float64, period int64) (out []float64) {
-	out = talib.Ma(in, int(period), talib.SMA)
+	if len(in) < int(period) {
+		out = make([]float64, len(in))
+	} else {
+		out = talib.Ma(in, int(period), talib.SMA)
+	}
 	return
 }
