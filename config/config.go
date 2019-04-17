@@ -44,6 +44,10 @@ twse:
   # cron: use UTC
   cron: "0 5 7-12 * * *"
 
+telegram:
+  token: ""
+  chatid: ""
+
 porter:
   v1:
     host: "192.168.33.10"

@@ -103,6 +103,14 @@ func TWSECron() string {
 	return viper.GetString("twse.cron")
 }
 
+func TelegramToken() string {
+	return viper.GetString("telegram.token")
+}
+
+func TelegramChatID() string {
+	return viper.GetString("telegram.chatid")
+}
+
 func PorterV1Host() string {
 	return viper.GetString("porter.v1.host")
 }

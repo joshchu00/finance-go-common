@@ -1,22 +1,33 @@
 package http
 
 import (
+	"bytes"
 	"errors"
 	"io/ioutil"
 	"net/http"
 )
 
-func Get(url string, referer string) (bytes []byte, err error) {
+func do(method string, url string, headers map[string]string, body []byte) (out []byte, err error) {
 
 	client := &http.Client{}
 
+	var bodyBuffer *bytes.Buffer
+	bodyBuffer = nil
+	if body != nil {
+		bodyBuffer = bytes.NewBuffer(body)
+	}
+
 	var request *http.Request
-	request, err = http.NewRequest(http.MethodGet, url, nil)
+	request, err = http.NewRequest(method, url, bodyBuffer)
 	if err != nil {
 		return
 	}
 
-	request.Header.Add("Referer", referer)
+	if headers != nil {
+		for k, v := range headers {
+			request.Header.Add(k, v)
+		}
+	}
 
 	var response *http.Response
 	response, err = client.Do(request)
@@ -25,7 +36,7 @@ func Get(url string, referer string) (bytes []byte, err error) {
 	}
 	defer response.Body.Close()
 
-	bytes, err = ioutil.ReadAll(response.Body)
+	out, err = ioutil.ReadAll(response.Body)
 	if err != nil {
 		return
 	}
@@ -36,4 +47,12 @@ func Get(url string, referer string) (bytes []byte, err error) {
 	}
 
 	return
+}
+
+func Get(url string, headers map[string]string) ([]byte, error) {
+	return do(http.MethodGet, url, headers, nil)
+}
+
+func Post(url string, headers map[string]string, body []byte) ([]byte, error) {
+	return do(http.MethodPost, url, headers, body)
 }
