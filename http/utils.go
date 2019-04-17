@@ -11,14 +11,15 @@ func do(method string, url string, headers map[string]string, body []byte) (out 
 
 	client := &http.Client{}
 
-	var bodyBuffer *bytes.Buffer
-	bodyBuffer = nil
-	if body != nil {
-		bodyBuffer = bytes.NewBuffer(body)
-	}
-
 	var request *http.Request
-	request, err = http.NewRequest(method, url, bodyBuffer)
+	switch method {
+	case http.MethodGet:
+		request, err = http.NewRequest(method, url, nil)
+	case http.MethodPost:
+		request, err = http.NewRequest(method, url, bytes.NewBuffer(body))
+	default:
+		err = errors.New("Unknown method")
+	}
 	if err != nil {
 		return
 	}
