@@ -60,6 +60,42 @@ func (c *Client) InsertStrategyRowStringColumn(spmk *StrategyPrimaryKey, column 
 	return
 }
 
+func (c *Client) SelectStrategyRowByPrimaryKey(spmk *StrategyPrimaryKey) (sr *StrategyRow, err error) {
+
+	cql := "SELECT exchange, symbol, period, datetime, lsma FROM strategy WHERE exchange = ? AND symbol = ? AND period = ? AND datetime = ? LIMIT 1"
+
+	query := c.session.Query(
+		cql,
+		spmk.Exchange,
+		spmk.Symbol,
+		spmk.Period,
+		spmk.Datetime,
+	)
+
+	var exchange, symbol, period string
+	var datetime time.Time
+	var lsma string
+
+	err = query.Scan(&exchange, &symbol, &period, &datetime, &lsma)
+	if err != nil {
+		return
+	}
+
+	sr = &StrategyRow{
+		StrategyPrimaryKey: StrategyPrimaryKey{
+			StrategyPartitionKey: StrategyPartitionKey{
+				Exchange: exchange,
+				Symbol:   symbol,
+				Period:   period,
+			},
+			Datetime: datetime,
+		},
+		LSMA: lsma,
+	}
+
+	return
+}
+
 func (c *Client) SelectStrategyRowsByPartitionKey(sptk *StrategyPartitionKey) (srs []*StrategyRow, err error) {
 
 	cql := "SELECT exchange, symbol, period, datetime, lsma FROM strategy WHERE exchange = ? AND symbol = ? AND period = ? ORDER BY datetime ASC"

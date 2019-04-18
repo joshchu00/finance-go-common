@@ -47,6 +47,9 @@ twse:
 telegram:
   token: ""
   chatid: ""
+  url:
+    sendmessage: "https://api.telegram.org/bot%s/sendMessage"
+  text: "%s %s LSMA %s"
 
 porter:
   v1:

@@ -111,6 +111,14 @@ func TelegramChatID() string {
 	return viper.GetString("telegram.chatid")
 }
 
+func TelegramURLSendMessage() string {
+	return viper.GetString("telegram.url.sendmessage")
+}
+
+func TelegramText() string {
+	return viper.GetString("telegram.text")
+}
+
 func PorterV1Host() string {
 	return viper.GetString("porter.v1.host")
 }
