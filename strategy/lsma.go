@@ -34,7 +34,7 @@ func CalculateLSMA(in []*LSMAInput) (out []LSMAValue) {
 
 		status := LSMASELL
 
-		if (n.SMA0060 >= n.SMA0120) && (n.SMA0060 >= n.SMA0240) {
+		if (n.SMA0060 >= n.SMA0120) && (n.SMA0120 >= n.SMA0240) {
 			status = LSMABUY
 		}
 
