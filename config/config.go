@@ -42,14 +42,14 @@ twse:
   referer: "http://www.twse.com.tw/zh/page/trading/exchange/MI_INDEX.html"
   data: "/twse"
   # cron: use UTC
-  cron: "0 5 7-12 * * *"
+  cron: "0 5 7,9,12 * * *"
 
 telegram:
   token: ""
   chatid: ""
   url:
     sendmessage: "https://api.telegram.org/bot%s/sendMessage"
-  text: "%s %s LSMA %s"
+  text: "%s %s %s %s %s"
 
 porter:
   v1:
