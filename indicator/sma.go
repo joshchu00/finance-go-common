@@ -6,6 +6,21 @@ import (
 )
 
 var (
+	SMA0005 *Indicator = &Indicator{
+		Type:   SMA,
+		Column: cassandra.IndicatorColumnSMA0005,
+		Period: 5,
+	}
+	SMA0010 *Indicator = &Indicator{
+		Type:   SMA,
+		Column: cassandra.IndicatorColumnSMA0010,
+		Period: 10,
+	}
+	SMA0020 *Indicator = &Indicator{
+		Type:   SMA,
+		Column: cassandra.IndicatorColumnSMA0020,
+		Period: 20,
+	}
 	SMA0060 *Indicator = &Indicator{
 		Type:   SMA,
 		Column: cassandra.IndicatorColumnSMA0060,
@@ -26,6 +41,12 @@ var (
 func GetSMA(period int64) (idct *Indicator) {
 
 	switch period {
+	case 5:
+		idct = SMA0005
+	case 10:
+		idct = SMA0010
+	case 20:
+		idct = SMA0020
 	case 60:
 		idct = SMA0060
 	case 120:
