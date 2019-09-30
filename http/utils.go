@@ -2,7 +2,8 @@ package http
 
 import (
 	"bytes"
-	"errors"
+	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 )
@@ -11,15 +12,13 @@ func do(method string, url string, headers map[string]string, body []byte) (out 
 
 	client := &http.Client{}
 
-	var request *http.Request
-	switch method {
-	case http.MethodGet:
-		request, err = http.NewRequest(method, url, nil)
-	case http.MethodPost:
-		request, err = http.NewRequest(method, url, bytes.NewBuffer(body))
-	default:
-		err = errors.New("Unknown method")
+	var bodyIOReader io.Reader
+	if body != nil {
+		bodyIOReader = bytes.NewBuffer(body)
 	}
+
+	var request *http.Request
+	request, err = http.NewRequest(method, url, bodyIOReader)
 	if err != nil {
 		return
 	}
@@ -43,17 +42,27 @@ func do(method string, url string, headers map[string]string, body []byte) (out 
 	}
 
 	if 200 != response.StatusCode {
-		err = errors.New("Not 200")
+		err = fmt.Errorf("Not 200: %d", response.StatusCode)
 		return
 	}
 
 	return
 }
 
-func Get(url string, headers map[string]string) ([]byte, error) {
-	return do(http.MethodGet, url, headers, nil)
+type Method func(string, map[string]string, []byte) ([]byte, error)
+
+func Get(url string, headers map[string]string, body []byte) ([]byte, error) {
+	return do(http.MethodGet, url, headers, body)
 }
 
 func Post(url string, headers map[string]string, body []byte) ([]byte, error) {
 	return do(http.MethodPost, url, headers, body)
+}
+
+func Put(url string, headers map[string]string, body []byte) ([]byte, error) {
+	return do(http.MethodPut, url, headers, body)
+}
+
+func Delete(url string, headers map[string]string, body []byte) ([]byte, error) {
+	return do(http.MethodDelete, url, headers, body)
 }
